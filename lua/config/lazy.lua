@@ -6,7 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
+      { out,                            "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -18,12 +18,26 @@ vim.opt.rtp:prepend(lazypath)
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
-vim.g.mapleader = ","
+vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 require("config/options")
 
-
+-- autoformatting
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--  group = vim.api.nvim_create_augroup("lsp", { clear = true }),
+--  callback = function(args)
+--    -- 2
+--    vim.api.nvim_create_autocmd("BufWritePre", {
+--      -- 3
+--      buffer = args.buf,
+--      callback = function()
+--        -- 4 + 5
+--        vim.lsp.buf.format { async = false, id = args.data.client_id }
+--      end,
+--    })
+--  end
+--})
 
 -- Setup lazy.nvim
 require("lazy").setup({
@@ -42,14 +56,14 @@ require("lazy").setup({
     local format_sync_grp = vim.api.nvim_create_augroup("goimports", {})
     vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = "*.go",
-        callback = function()
+      callback = function()
         require('go.format').goimports()
       end,
       group = format_sync_grp,
     })
   end
 
-  
+
 })
 
 require("config/keymaps")
