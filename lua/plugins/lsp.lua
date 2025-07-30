@@ -10,7 +10,7 @@ return {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
 
         -- Useful status updates for LSP.
-        { "j-hui/fidget.nvim", opts = {} },
+        { "j-hui/fidget.nvim",       opts = {} },
     },
     config = function()
         -- Brief aside: **What is LSP?**
@@ -54,6 +54,18 @@ return {
                     mode = mode or "n"
                     vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
                 end
+
+                map("<leader>lf", function() vim.lsp.buf.format { async = true } end, "[F]ormat buffer")
+
+                -- Jump to the definition of the word under your cursor.
+                --  This is where a variable was first declared, or where a function is defined, etc.
+                --  To jump back, press <C-t>.
+                map("gD", require("fzf-lua").lsp_definitions, "[G]oto [D]efinition")
+
+                -- Jump to the definition of the word under your cursor.
+                --  This is where a variable was first declared, or where a function is defined, etc.
+                --  To jump back, press <C-t>.
+                -- map("gD", vim.lsp.buf.definition, "[G]oto [D]efinition")
 
                 -- Jump to the definition of the word under your cursor.
                 --  This is where a variable was first declared, or where a function is defined, etc.
@@ -249,7 +261,7 @@ return {
         -- for you, so that they are available from within Neovim.
         local ensure_installed = vim.tbl_keys(servers or {})
         vim.list_extend(ensure_installed, {
-            "stylua", -- Used to format Lua code
+            "stylua",    -- Used to format Lua code
             "prettierd", -- Used to format javascript and typescript code
         })
         require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
