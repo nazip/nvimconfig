@@ -4,6 +4,16 @@ return {
 
   {
     "mfussenegger/nvim-dap",
+    dependencies = {
+            "rcarriga/nvim-dap-ui",
+            "leoluz/nvim-dap-go",
+            "nvim-neotest/nvim-nio"
+    },
+    config = function()
+      require("dapui").setup()
+      require("dap-go").setup()
+      vim.fn.sign_define("DapBreakpoint", {text = "⏺", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl="DapBreakpoint"})
+    end,
     lazy = true,
     -- Copied from LazyVim/lua/lazyvim/plugins/extras/dap/core.lua and
     -- modified.
@@ -23,6 +33,16 @@ return {
         "<leader>dC",
         function() require("dap").run_to_cursor() end,
         desc = "Run to Cursor"
+      },
+      {
+        "<leader>di",
+        function() require("dap").step_over() end,
+        desc = "Step Over"
+      },
+      {
+        "<leader>dI",
+        function() require("dap").step_into() end,
+        desc = "Step Into"
       },
 
       {
