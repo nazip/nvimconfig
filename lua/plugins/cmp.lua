@@ -9,6 +9,9 @@ return {
         config = function()
             local cmp = require 'cmp'
             cmp.setup({
+                view = {
+                    entries = 'native',
+                },
                 snippet = {
                     -- REQUIRED - you must specify a snippet engine
                     expand = function(args)
@@ -26,29 +29,30 @@ return {
                     end,
                 },
                 window = {
+                    documentation = false,
                     -- completion = cmp.config.window.bordered(),
                     -- documentation = cmp.config.window.bordered(),
                 },
                 mapping = cmp.mapping.preset.insert({
                     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-p>'] = cmp.mapping.complete(),
                     ['<C-e>'] = cmp.mapping.abort(),
                     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-                    -- ['<Tab>'] = function(fallback)
-                    --   if cmp.visible() then
-                    --     cmp.select_next_item()
-                    --   else
-                    --     fallback() -- If you use vim-endwise, this fallback will behave the same as vim-endwise.
-                    --   end
-                    -- end,
-                    -- ['<S-Tab>'] = function(fallback)
-                    --   if cmp.visible() then
-                    --     cmp.select_prev_item()
-                    --   else
-                    --     fallback() -- If you use vim-endwise, this fallback will behave the same as vim-endwise.
-                    --   end
-                    -- end
+                    ['<Tab>'] = function(fallback)
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        else
+                            fallback() -- If you use vim-endwise, this fallback will behave the same as vim-endwise.
+                        end
+                    end,
+                    ['<S-Tab>'] = function(fallback)
+                        if cmp.visible() then
+                            cmp.select_prev_item()
+                        else
+                            fallback() -- If you use vim-endwise, this fallback will behave the same as vim-endwise.
+                        end
+                    end
                 }),
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
@@ -57,9 +61,46 @@ return {
                     -- { name = 'ultisnips' }, -- For ultisnips users.
                     -- { name = 'snippy' }, -- For snippy users.
                 }, {
-                    { name = 'buffer' },
+                    { name = 'buffer',
+                        option = {
+                            get_bufnrs = function() return { vim.api.nvim_get_current_buf() } end
+                        }
+                    },
                 })
             })
+
+            local capabilities = require('cmp_nvim_lsp').default_capabilities() --nvim-cmp
+
+            -- local on_attach = function(client, bufnr)
+            --   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+            --   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+            --
+            --   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+            -- end
+
+            -- Setup lspconfig.
+            local nvim_lsp = require('lspconfig')
+
+            -- setup languages 
+            -- GoLang
+            nvim_lsp['gopls'].setup{
+                cmd = {'gopls'},
+                -- on_attach = on_attach,
+              capabilities = capabilities,
+              settings = {
+                gopls = {
+                  experimentalPostfixCompletions = true,
+                  analyses = {
+                    unusedparams = true,
+                    shadow = true,
+                  },
+                  staticcheck = true,
+                },
+              },
+              init_options = {
+                usePlaceholders = true,
+              }
+            }
         end
     }
 }
