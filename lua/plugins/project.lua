@@ -34,7 +34,7 @@ return {
     end,
     keys = {
         {
-            "<leader>fp", "<cmd>FzfProjects<CR>", desc="Find Recent Projects"
+            "<leader>frp", "<cmd>FzfProjects<CR>", desc="Find Recent Projects"
         }
     }
 }

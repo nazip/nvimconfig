@@ -79,28 +79,73 @@ return {
             -- end
 
             -- Setup lspconfig.
-            local nvim_lsp = require('lspconfig')
 
-            -- setup languages 
-            -- GoLang
-            nvim_lsp['gopls'].setup{
-                cmd = {'gopls'},
-                -- on_attach = on_attach,
-              capabilities = capabilities,
-              settings = {
-                gopls = {
-                  experimentalPostfixCompletions = true,
-                  analyses = {
-                    unusedparams = true,
-                    shadow = true,
-                  },
-                  staticcheck = true,
-                },
-              },
-              init_options = {
-                usePlaceholders = true,
-              }
-            }
+
+vim.lsp.config("gopls", {
+  cmd = { "gopls" }, -- The command to start gopls
+  root_markers = { "go.work", "go.mod", ".git" }, -- Markers to identify the project root
+  filetypes = { "go" }, -- Filetypes for which this LSP server should be active
+  settings = {
+    gopls = {
+      analyses = {
+        -- fieldalignment = true,
+        nilness = true,
+        unusedwrite = true,
+        unusedresult = true,
+        unusedvariable = true,
+        unusedparams = true,
+        staticcheck = true,
+        gofumpt = true,
+      },
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        -- parameterNames = true,
+        rangeVariableTypes = true,
+      },
+      -- buildFlags = { "-tags=integration" }, -- Example build flags
+      -- Add other gopls-specific settings here as needed
+    },
+  },
+  -- on_attach = function(client, bufnr)
+    -- Optional: Add buffer-local keybindings or other setup here
+    -- For example, to set up completion or formatting
+    -- require('cmp_nvim_lsp').setup({ client = client })
+    -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- end,
+})
+
+-- Enable the gopls configuration
+vim.lsp.enable("gopls")
+
+
+
+
+            -- vim.lsp.config(
+            --     'gopls',
+            --     {
+            --         cmd = {'gopls'},
+            --             -- on_attach = on_attach,
+            --         capabilities = capabilities,
+            --         settings = {
+            --             gopls = {
+            --                 experimentalPostfixCompletions = true,
+            --                 analyses = {
+            --                     unusedparams = true,
+            --                     shadow = true,
+            --                 },
+            --                 staticcheck = true,
+            --             },
+            --         },
+            --         init_options = {
+            --             usePlaceholders = true,
+            --         }
+            --     }
+            -- )
+
         end
     }
 }
