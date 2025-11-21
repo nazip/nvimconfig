@@ -19,7 +19,7 @@ vim.keymap.set('n', '<Leader>OO', ':lua require("dbee").open()<CR>', { desc = "o
 vim.keymap.set('n', '<Leader>O-', ':lua require("dbee").close()<CR>', { desc = "close Dbee" })
 
 -- golang
-vim.keymap.set('n', '<Leader>gR', ':GoRun ./cmd <CR> :q', { desc = "run Go file" })
+vim.keymap.set('n', '<Leader>gR', ':GoRun ./cmd <CR>', { desc = "run Go file" })
 vim.keymap.set('n', '<Leader>gC', ':GoCoverageToggle<CR>', { desc = "toggle Go coverage" })
 vim.keymap.set('n', '<Leader>gT', ':GoTestFile<CR>', { desc = "run Go test for current file" })
 vim.keymap.set('n', '<Leader>gB', ':GoBuild ./cmd/main.go <CR>', { desc = "build Go file" })
@@ -42,3 +42,7 @@ vim.keymap.set('n', '<leader>gr', ':Grpc<CR>', {desc = "exec grpc url"})
 vim.keymap.set('n', '<Leader>sw', ':SwaggerPreview<CR>', { desc = "swagger preview" })
 vim.keymap.set('n', '<Leader>sws', ':SwaggerPreviewStop<CR>', { desc = "swagger preview stop" })
 vim.keymap.set('n', '<Leader>swt', ':SwaggerPreviewToggle<CR>', { desc = "swagger preview toggle" })
+
+--NvimTree
+vim.keymap.set('n', '<Leader>tc', ':NvimTreeCollapse<CR>', { desc = "NvimTree collapse" })
+

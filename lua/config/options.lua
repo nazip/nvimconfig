@@ -49,3 +49,15 @@ vim.opt.splitbelow = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 5
+
+-- Fillchars
+vim.opt.fillchars = {
+	vert = "│",
+	fold = "⠀",
+	eob = " ", -- suppress ~ at EndOfBuffer
+	-- diff = "⣿", -- alternatives = ⣿ ░ ─ ╱
+	msgsep = "‾",
+	foldopen = "▾",
+	foldsep = "│",
+	foldclose = "▸",
+}
