@@ -19,7 +19,8 @@ vim.keymap.set('n', '<Leader>OO', ':lua require("dbee").open()<CR>', { desc = "o
 vim.keymap.set('n', '<Leader>O-', ':lua require("dbee").close()<CR>', { desc = "close Dbee" })
 
 -- golang
-vim.keymap.set('n', '<Leader>gR', ':GoRun ./cmd <CR>', { desc = "run Go file" })
+vim.keymap.set('n', '<Leader>gR', ':GoRun ./cmd <CR>', { desc = "run Go file (from cmd)" })
+vim.keymap.set('n', '<Leader>r', ':!go run main.go<CR>', { desc = "run Go file frim root" })
 vim.keymap.set('n', '<Leader>gC', ':GoCoverageToggle<CR>', { desc = "toggle Go coverage" })
 vim.keymap.set('n', '<Leader>gT', ':GoTestFile<CR>', { desc = "run Go test for current file" })
 vim.keymap.set('n', '<Leader>gB', ':GoBuild ./cmd/main.go <CR>', { desc = "build Go file" })
