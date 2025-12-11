@@ -1,4 +1,7 @@
+local helpers = require("config.helpers")
+
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
 
 -- Window navigation
 vim.keymap.set("n", "<c-l>", ":wincmd l<CR>", { desc = "Go to right window" })
@@ -20,7 +23,7 @@ vim.keymap.set('n', '<Leader>O-', ':lua require("dbee").close()<CR>', { desc = "
 
 -- golang
 vim.keymap.set('n', '<Leader>gR', ':GoRun ./cmd <CR>', { desc = "run Go file (from cmd)" })
-vim.keymap.set('n', '<Leader>r', ':!go run main.go<CR>', { desc = "run Go file frim root" })
+vim.keymap.set('n', '<Leader>r', helpers.runPrg(), { desc = "run Go file frim root" })
 vim.keymap.set('n', '<Leader>gC', ':GoCoverageToggle<CR>', { desc = "toggle Go coverage" })
 vim.keymap.set('n', '<Leader>gT', ':GoTestFile<CR>', { desc = "run Go test for current file" })
 vim.keymap.set('n', '<Leader>gB', ':GoBuild ./cmd/main.go <CR>', { desc = "build Go file" })
