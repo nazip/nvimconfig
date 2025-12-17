@@ -4,7 +4,7 @@ local function exists(filename)
 
    local isPresent = true
    -- Opens a file
-   f = io.open(filename)
+   local f = io.open(filename)
 
    -- if file is not present, f will be nil
    if not f then
