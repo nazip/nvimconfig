@@ -8,6 +8,8 @@ return {
         { "williamboman/mason.nvim", opts = {} },
         "williamboman/mason-lspconfig.nvim",
         "WhoIsSethDaniel/mason-tool-installer.nvim",
+        "saghen/blink.compat",
+        "saghen/blink.cmp",
 
         -- Useful status updates for LSP.
         { "j-hui/fidget.nvim",       opts = {} },

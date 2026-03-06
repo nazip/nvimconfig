@@ -4,13 +4,29 @@ return {
     "ray-x/guihua.lua",
     "neovim/nvim-lspconfig",
     "nvim-treesitter/nvim-treesitter",
+    "hrsh7th/cmp-nvim-lsp", -- cmp_nvim_lsp
   },
   opts = {
     -- lsp_keymaps = false,
     -- other options
   },
   config = function(lp, opts)
-    require("go").setup(opts)
+
+    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+    require('go').setup({
+      -- other setups ....
+      lsp_cfg = {
+        capabilities = capabilities,
+        -- other setups
+      },
+    })
+
+    local gopls_cfg = require('go.lsp').config()
+    -- gopls_cfg.filetypes = { 'go', 'gomod'}, -- override settings
+    vim.lsp.config.gopls = gopls_cfg
+    vim.lsp.enable('gopls')
+
+    -- require("go").setup(opts)
     local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
     vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = "*.go",

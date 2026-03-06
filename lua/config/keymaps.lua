@@ -49,4 +49,7 @@ vim.keymap.set('n', '<Leader>swt', ':SwaggerPreviewToggle<CR>', { desc = "swagge
 
 --NvimTree
 vim.keymap.set('n', '<Leader>tc', ':NvimTreeCollapse<CR>', { desc = "NvimTree collapse" })
+vim.keymap.set('n', '<Leader>tr', ':NvimTreeRefresh<CR>', { desc = "NvimTree refresh" })
 
+--keyboard buffer 
+vim.keymap.set('n', '<Leader>b', ':Atone toggle<CR>', { desc = "show keyboard buff" })
