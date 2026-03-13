@@ -1,0 +1,25 @@
+-- return {
+--   "azorng/goose.nvim",
+--   dependencies = {
+--     "nvim-lua/plenary.nvim",
+--     "MeanderingProgrammer/render-markdown.nvim", -- Для красивого отображения ответов
+--   },
+--   config = function()
+--     require("goose").setup({
+--       goose_binary = "/home/nazip/.local/bin/goose",
+--       -- Настройки по умолчанию
+--       prefered_picker = 'fzf', -- Можно выбрать 'telescope', 'fzf' или 'snacks'
+--       default_global_keymaps = true, -- Включает стандартные горячие клавиши
+--     })
+--   end,
+-- }
+-- return {
+--   "greggh/claude-code.nvim",
+--   dependencies = {
+--     "nvim-lua/plenary.nvim", -- Required for git operations
+--   },
+--   config = function()
+--     require("claude-code").setup()
+--   end
+-- }
+return {}
