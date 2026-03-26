@@ -11,6 +11,10 @@ return {
         dotfiles = false, -- Set to false to show dotfiles
         git_ignored = false,
       },
+      view = {
+        width = 50,
+      },
+
     }
   end,
 }

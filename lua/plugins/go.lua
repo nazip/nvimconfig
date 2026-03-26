@@ -19,6 +19,7 @@ return {
         capabilities = capabilities,
         -- other setups
       },
+      ai = { enable = true }, 
     })
 
     local gopls_cfg = require('go.lsp').config()
