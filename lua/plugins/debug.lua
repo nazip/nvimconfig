@@ -7,7 +7,7 @@ return {
     dependencies = {
             "rcarriga/nvim-dap-ui",
             "leoluz/nvim-dap-go",
-            "nvim-neotest/nvim-nio"
+            "nvim-neotest/nvim-nio",
     },
     config = function()
       require("dapui").setup()
@@ -54,7 +54,9 @@ return {
   },
   {
     "rcarriga/nvim-dap-ui",
-    config = true,
+    config = function() 
+      require("nvim-dap-virtual-text").setup() 
+    end,
     keys = {
       {
         "<leader>du",
