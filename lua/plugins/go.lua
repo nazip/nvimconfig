@@ -14,6 +14,13 @@ return {
 
     local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
     require('go').setup({
+      lsp_codelens = false,
+   vim.api.nvim_create_autocmd("InsertLeave", {
+        pattern = "*.go",
+        callback = function()
+          vim.lsp.codelens.refresh({ bufnr = 0 })
+        end,
+      }),
       -- other setups ....
       lsp_cfg = {
         capabilities = capabilities,
