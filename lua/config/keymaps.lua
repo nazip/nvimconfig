@@ -52,7 +52,7 @@ vim.keymap.set("n", "<Leader>tc", ":NvimTreeCollapse<CR>", { desc = "NvimTree co
 vim.keymap.set("n", "<Leader>tr", ":NvimTreeRefresh<CR>", { desc = "NvimTree refresh" })
 
 --keyboard buffer
-vim.keymap.set("n", "<Leader>b", ":Atone toggle<CR>", { desc = "show keyboard buff" })
+vim.keymap.set("n", "<Leader>bb", ":Atone toggle<CR>", { desc = "show keyboard buff" })
 
 --find and replace
 vim.keymap.set("n", "<Leader>ff", ":GrugFar<CR>", { desc = "find and replace in project" })
