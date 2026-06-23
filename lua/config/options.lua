@@ -1,7 +1,7 @@
 vim.opt.expandtab = true -- Convert tabs to spaces
-vim.opt.shiftwidth = 4   -- Amount to indent with << and >>
-vim.opt.tabstop = 4      -- How many spaces are shown per Tab
-vim.opt.softtabstop = 4  -- How many spaces are applied when pressing Tab
+vim.opt.shiftwidth = 4 -- Amount to indent with << and >>
+vim.opt.tabstop = 4 -- How many spaces are shown per Tab
+vim.opt.softtabstop = 4 -- How many spaces are applied when pressing Tab
 
 vim.opt.smarttab = true
 vim.opt.smartindent = true
@@ -61,3 +61,8 @@ vim.opt.fillchars = {
 	foldsep = "│",
 	foldclose = "▸",
 }
+
+vim.opt_local.foldmethod = "indent"
+vim.opt_local.foldlevel = 20 -- Задаем высокий уровень вместо 99
+vim.opt_local.foldlevelstart = 20 -- Указываем Neovim держать эти уровни открытыми на старте
+vim.opt_local.foldenable = true

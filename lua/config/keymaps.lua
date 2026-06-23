@@ -2,7 +2,6 @@ local helpers = require("config.helpers")
 
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
-
 -- Window navigation
 vim.keymap.set("n", "<c-l>", ":wincmd l<CR>", { desc = "Go to right window" })
 vim.keymap.set("n", "<c-h>", ":wincmd h<CR>", { desc = "Go to left window" })
@@ -14,43 +13,72 @@ vim.keymap.set("n", "|", ":vsplit<CR>", { desc = "Vertically split window" })
 vim.keymap.set("n", "\\", ":split<CR>", { desc = "Horizontally split window" })
 
 -- NvimTree
-vim.keymap.set('n', '<C-n>', ':NvimTreeToggle<CR>', {})
-vim.keymap.set('n', '<leader>RR', ':NvimTreeRefresh<CR>', {})
+vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", {})
+vim.keymap.set("n", "<leader>RR", ":NvimTreeRefresh<CR>", {})
 
 -- Dbee
-vim.keymap.set('n', '<Leader>OO', ':lua require("dbee").open()<CR>', { desc = "open Dbee" })
-vim.keymap.set('n', '<Leader>O-', ':lua require("dbee").close()<CR>', { desc = "close Dbee" })
+vim.keymap.set("n", "<Leader>OO", ':lua require("dbee").open()<CR>', { desc = "open Dbee" })
+vim.keymap.set("n", "<Leader>O-", ':lua require("dbee").close()<CR>', { desc = "close Dbee" })
 
 -- golang
-vim.keymap.set('n', '<Leader>gR', ':GoRun ./cmd <CR>', { desc = "run Go file (from cmd)" })
-vim.keymap.set('n', '<Leader>r', helpers.runPrg(), { desc = "run Go file frim root" })
-vim.keymap.set('n', '<Leader>gC', ':GoCoverageToggle<CR>', { desc = "toggle Go coverage" })
-vim.keymap.set('n', '<Leader>gTF', ':GoTestFile<CR>', { desc = "run Go test for current file" })
-vim.keymap.set('n', '<Leader>gTf', ':GoTestFunc -s<CR>', { desc = "run Go test for selected function" })
-vim.keymap.set('n', '<Leader>gB', ':GoBuild ./cmd/main.go <CR>', { desc = "build Go file" })
-vim.keymap.set('n', '<Leader>gg', ':GoGenerate<CR>', { desc = "genearate moke for Go" })
-vim.keymap.set('n', '<Leader>gI', ':GoInstall<CR>', { desc = "install Go package" })
-vim.keymap.set('n', '<Leader>gD', ':GoDoc<CR>', { desc = "show Go doc" })
-vim.keymap.set('n', '<Leader>gF', ':GoFmt<CR>', { desc = "format Go file" })
-vim.keymap.set('n', '<Leader>gI', ':GoImport<CR>', { desc = "import Go package" })
-vim.keymap.set('n', '<Leader>gt', ':GoAddTag<CR>', { desc = "add tags to Go struct" })
-vim.keymap.set('n', '<Leader>gt-', ':GoRmTag<CR>', { desc = "remove tags from Go struct" })
-vim.keymap.set('n', '<Leader>ggt', ':GoAddTest<CR>', { desc = "add test file for current Go file" })
-vim.keymap.set('n', '<Leader>gs', ':GoFillStruct<CR>', { desc = "fill struct" })
-vim.keymap.set('n', '<Leader>gw', ':GoFillSwitch<CR>', { desc = "fill switch" })
-vim.keymap.set('n', '<Leader>gi', ':GoIfErr<CR>', { desc = "insert if err" })
+vim.keymap.set("n", "<Leader>gR", ":GoRun ./cmd <CR>", { desc = "run Go file (from cmd)" })
+vim.keymap.set("n", "<Leader>rg", helpers.runPrg(), { desc = "run Go file frim root" })
+vim.keymap.set("n", "<Leader>gC", ":GoCoverageToggle<CR>", { desc = "toggle Go coverage" })
+vim.keymap.set("n", "<Leader>gTF", ":GoTestFile<CR>", { desc = "run Go test for current file" })
+vim.keymap.set("n", "<Leader>gTf", ":GoTestFunc -s<CR>", { desc = "run Go test for selected function" })
+vim.keymap.set("n", "<Leader>gB", ":GoBuild ./cmd/main.go <CR>", { desc = "build Go file" })
+vim.keymap.set("n", "<Leader>gg", ":GoGenerate<CR>", { desc = "genearate moke for Go" })
+vim.keymap.set("n", "<Leader>gI", ":GoInstall<CR>", { desc = "install Go package" })
+vim.keymap.set("n", "<Leader>gD", ":GoDoc<CR>", { desc = "show Go doc" })
+vim.keymap.set("n", "<Leader>gF", ":GoFmt<CR>", { desc = "format Go file" })
+vim.keymap.set("n", "<Leader>gI", ":GoImport<CR>", { desc = "import Go package" })
+vim.keymap.set("n", "<Leader>gt", ":GoAddTag<CR>", { desc = "add tags to Go struct" })
+vim.keymap.set("n", "<Leader>gt-", ":GoRmTag<CR>", { desc = "remove tags from Go struct" })
+vim.keymap.set("n", "<Leader>ggt", ":GoAddTest<CR>", { desc = "add test file for current Go file" })
+vim.keymap.set("n", "<Leader>gs", ":GoFillStruct<CR>", { desc = "fill struct" })
+vim.keymap.set("n", "<Leader>gw", ":GoFillSwitch<CR>", { desc = "fill switch" })
+vim.keymap.set("n", "<Leader>gi", ":GoIfErr<CR>", { desc = "insert if err" })
 
 -- grpc
-vim.keymap.set('n', '<leader>gr', ':Grpc<CR>', {desc = "exec grpc url"})
+vim.keymap.set("n", "<leader>gr", ":Grpc<CR>", { desc = "exec grpc url" })
 
 -- swagger preview
-vim.keymap.set('n', '<Leader>sw', ':SwaggerPreview<CR>', { desc = "swagger preview" })
-vim.keymap.set('n', '<Leader>sws', ':SwaggerPreviewStop<CR>', { desc = "swagger preview stop" })
-vim.keymap.set('n', '<Leader>swt', ':SwaggerPreviewToggle<CR>', { desc = "swagger preview toggle" })
+vim.keymap.set("n", "<Leader>sw", ":SwaggerPreview<CR>", { desc = "swagger preview" })
+vim.keymap.set("n", "<Leader>sws", ":SwaggerPreviewStop<CR>", { desc = "swagger preview stop" })
+vim.keymap.set("n", "<Leader>swt", ":SwaggerPreviewToggle<CR>", { desc = "swagger preview toggle" })
 
 --NvimTree
-vim.keymap.set('n', '<Leader>tc', ':NvimTreeCollapse<CR>', { desc = "NvimTree collapse" })
-vim.keymap.set('n', '<Leader>tr', ':NvimTreeRefresh<CR>', { desc = "NvimTree refresh" })
+vim.keymap.set("n", "<Leader>tc", ":NvimTreeCollapse<CR>", { desc = "NvimTree collapse" })
+vim.keymap.set("n", "<Leader>tr", ":NvimTreeRefresh<CR>", { desc = "NvimTree refresh" })
 
---keyboard buffer 
-vim.keymap.set('n', '<Leader>b', ':Atone toggle<CR>', { desc = "show keyboard buff" })
+--keyboard buffer
+vim.keymap.set("n", "<Leader>b", ":Atone toggle<CR>", { desc = "show keyboard buff" })
+
+--find and replace
+vim.keymap.set("n", "<Leader>ff", ":GrugFar<CR>", { desc = "find and replace in project" })
+
+-- yaml
+-- local function navigate_fold(direction)
+--   local cmd = "normal! " .. direction
+--   local view = vim.fn.winsaveview()
+--   local current_lnum = view.lnum
+--
+--   while true do
+--     vim.cmd(cmd)
+--     local new_lnum = vim.fn.line(".")
+--
+--     if new_lnum == current_lnum then
+--       vim.fn.winrestview(view)
+--       break
+--     end
+--     current_lnum = new_lnum
+--
+--     if vim.fn.foldclosed(current_lnum) == current_lnum then
+--       break
+--     end
+--   end
+-- end
+--
+-- -- Keymaps
+-- vim.keymap.set('n', ']z', function() navigate_fold('j') end, { desc = 'Next closed fold' })
+-- vim.keymap.set('n', '[z', function() navigate_fold('k') end, { desc = 'Prev closed fold' })
