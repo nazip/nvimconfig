@@ -1,129 +1,55 @@
--- Docs at https://github.com/mfussenegger/nvim-dap-python are useful.
 return {
-  -- keep-sorted start block=yes
+	{
+		"mfussenegger/nvim-dap",
+		dependencies = {
+			"rcarriga/nvim-dap-ui",
+			"nvim-neotest/nvim-nio",
+			"leoluz/nvim-dap-go",
+			"theHamsta/nvim-dap-virtual-text",
+		},
+		config = function()
+			local dap = require("dap")
+			local dapui = require("dapui")
 
-  {
-    "mfussenegger/nvim-dap",
-    dependencies = {
-            "rcarriga/nvim-dap-ui",
-            "leoluz/nvim-dap-go",
-            "nvim-neotest/nvim-nio",
-    },
-    config = function()
-      require("dapui").setup()
-      require("dap-go").setup()
-      vim.fn.sign_define("DapBreakpoint", {text = "⏺", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl="DapBreakpoint"})
-    end,
-    lazy = true,
-    -- Copied from LazyVim/lua/lazyvim/plugins/extras/dap/core.lua and
-    -- modified.
-    keys = {
-      {
-        "<leader>db",
-        function() require("dap").toggle_breakpoint() end,
-        desc = "Toggle Breakpoint"
-      },
-      {
-        "<leader>dc",
-        function() require("dap").continue() end,
-        desc = "Continue"
-      },
+			-- Setup UI and virtual text extensions
+			dapui.setup()
+			require("nvim-dap-virtual-text").setup()
 
-      {
-        "<leader>dC",
-        function() require("dap").run_to_cursor() end,
-        desc = "Run to Cursor"
-      },
-      {
-        "<leader>di",
-        function() require("dap").step_over() end,
-        desc = "Step Over"
-      },
-      {
-        "<leader>dI",
-        function() require("dap").step_into() end,
-        desc = "Step Into"
-      },
+			-- Automatically configure delve with nvim-dap-go
+			require("dap-go").setup({
+				-- Additional delve configurations if needed (e.g. build flags)
+				delve = {
+					path = "dlv", -- Ensures dlv binary is picked up from your PATH
+				},
+			})
 
-      {
-        "<leader>dT",
-        function() require("dap").terminate() end,
-        desc = "Terminate"
-      },
-    },
-  },
-  {
-    "rcarriga/nvim-dap-ui",
-    config = function() 
-      require("nvim-dap-virtual-text").setup() 
-    end,
-    keys = {
-      {
-        "<leader>du",
-        function()
-          require("dapui").toggle({})
-        end,
-        desc = "Dap UI"
-      },
-    },
-    dependencies = {
-      -- keep-sorted start block=yes
-      {
-        "jay-babu/mason-nvim-dap.nvim",
-        ---@type MasonNvimDapSettings
-        opts = {
-          -- This line is essential to making automatic installation work
-          -- :exploding-brain
-          handlers = {},
-          automatic_installation = false,
-          -- DAP servers: these will be installed by mason-tool-installer.nvim
-          -- for consistency.
-          ensure_installed = {},
-        },
-        dependencies = {
-          "mfussenegger/nvim-dap",
-          "mason-org/mason.nvim",
-        },
-      },
-      {
-        "leoluz/nvim-dap-go",
-        config = true,
-        dependencies = {
-          "mfussenegger/nvim-dap",
-        },
-        keys = {
-          {
-            "<leader>dt",
-            function() require("dap-go").debug_test() end,
-            desc = "Debug test"
-          },
-        },
-      },
-      {
-        "mfussenegger/nvim-dap-python",
-        lazy = true,
-        config = function()
-          local python = vim.fn.expand("~/.local/share/nvim/mason/packages/debugpy/venv/bin/python")
-          require("dap-python").setup(python)
-        end,
-        -- Consider the mappings at
-        -- https://github.com/mfussenegger/nvim-dap-python?tab=readme-ov-file#mappings
-        dependencies = {
-          "mfussenegger/nvim-dap",
-        },
-      },
-      {
-        "nvim-neotest/nvim-nio",
-      },
-      {
-        "theHamsta/nvim-dap-virtual-text",
-        config = true,
-        dependencies = {
-          "mfussenegger/nvim-dap",
-        },
-      },
-      -- keep-sorted end
-    },
-  },
-  -- keep-sorted end
+			-- Hook up DAP UI to automatically open and close
+			dap.listeners.before.attach.dapui_config = function()
+				dapui.open()
+			end
+			dap.listeners.before.launch.dapui_config = function()
+				dapui.open()
+			end
+			dap.listeners.before.event_terminated.dapui_config = function()
+				dapui.close()
+			end
+			dap.listeners.before.event_exited.dapui_config = function()
+				dapui.close()
+			end
+
+			-- Essential Keymaps
+			vim.keymap.set("n", "<F5>", dap.continue, { desc = "Debug: Start/Continue" })
+			vim.keymap.set("n", "<F10>", dap.step_over, { desc = "Debug: Step Over" })
+			vim.keymap.set("n", "<F11>", dap.step_into, { desc = "Debug: Step Into" })
+			vim.keymap.set("n", "<F12>", dap.step_out, { desc = "Debug: Step Out" })
+			vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
+			vim.keymap.set("n", "<leader>B", function()
+				dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+			end, { desc = "Debug: Set Conditional Breakpoint" })
+
+			-- Go-specific debugging keymaps via nvim-dap-go
+			vim.keymap.set("n", "<leader>dt", require("dap-go").debug_test, { desc = "Debug: Go Test" })
+			vim.keymap.set("n", "<leader>dl", require("dap-go").debug_last_test, { desc = "Debug: Go Last Test" })
+		end,
+	},
 }
