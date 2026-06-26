@@ -67,16 +67,71 @@ require("lazy").setup({
 
 require("config/keymaps")
 
--- vim.api.nvim_create_autocmd("FileType", {
--- 	pattern = { "yaml", "yml" },
--- 	callback = function()
--- 		-- Переключаем фолдинг на движок Tree-sitter
--- 		vim.opt_local.foldmethod = "expr"
--- 		vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
---
--- 		-- Настройки, чтобы файл открывался развернутым
--- 		vim.opt_local.foldlevel = 20
--- 		vim.opt_local.foldlevelstart = 20
--- 		vim.opt_local.foldenable = true
--- 	end,
--- })
+
+vim.filetype.add({
+  extension = { pdf = "pdf" },
+})
+
+vim.api.nvim_create_autocmd("BufReadCmd", {
+  pattern = "*.pdf",
+  callback = function()
+    local file_path = vim.fn.shellescape(vim.api.nvim_buf_get_name(0))
+    
+    if vim.fn.has("mac") == 1 then
+      -- macOS: Открывает PDF напрямую в Google Chrome (или замените на ваш браузер)
+      vim.fn.jobstart("open -a 'Google Chrome' " .. file_path, { detach = true })
+    elseif vim.fn.has("linux") == 1 then
+      -- Linux: Открывает напрямую в Chrome / Chromium
+      -- Если используете Firefox, замените на "firefox"
+      vim.fn.jobstart("google-chrome-stable " .. file_path, { detach = true })
+    end
+    
+    -- Мгновенно закрываем бинарный буфер в Neovim
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.cmd("bdelete! " .. bufnr)
+  end,
+})
+
+-- 1. Регистрируем расширения файлов Word и Excel
+vim.filetype.add({
+  extension = {
+    doc  = "msword",
+    docx = "msword",
+    xls  = "msexcel",
+    xlsx = "msexcel",
+  },
+})
+
+-- 2. Перехватываем открытие документов, запускаем LibreOffice и восстанавливаем окна
+vim.api.nvim_create_autocmd("BufReadCmd", {
+  pattern = { "*.doc", "*.docx", "*.xls", "*.xlsx" },
+  callback = function()
+    local file_path = vim.api.nvim_buf_get_name(0)
+    local escaped_path = vim.fn.shellescape(file_path)
+    local bufnr = vim.api.nvim_get_current_buf()
+
+    -- Запускаем LibreOffice в фоне (он сам поймет: Writer или Calc)
+    if vim.fn.has("mac") == 1 then
+      vim.fn.jobstart("open -a 'LibreOffice' " .. escaped_path, { detach = true })
+    elseif vim.fn.has("linux") == 1 then
+      vim.fn.jobstart("libreoffice " .. escaped_path .. " >/dev/null 2>&1", { detach = true })
+    end
+
+    -- Возвращаем структуру окон в исходное состояние
+    vim.schedule(function()
+      if vim.api.nvim_buf_is_valid(bufnr) then
+        -- Находим предыдущий рабочий буфер для этого окна
+        local alt_buf = vim.fn.bufnr("#")
+        
+        if alt_buf > 0 and vim.api.nvim_buf_is_valid(alt_buf) then
+          vim.api.nvim_set_current_buf(alt_buf)
+        else
+          vim.cmd("silent! EditAlternate")
+        end
+        
+        -- Удаляем бинарный буфер таблицы, сохраняя геометрию сплитов
+        vim.cmd("keepalt bdelete! " .. bufnr)
+      end
+    end)
+  end,
+})
